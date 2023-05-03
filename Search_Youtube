@@ -1,0 +1,17 @@
+import webbrowser
+from youtube_search import YoutubeSearch
+import time
+
+def Search_Youtube(text):
+    #sử dụng vòng while để tìm kiếm đến khi có kết quả thì trả về
+    while True:
+        #biến result lưu lại kết quả trả về dưới dạng Dictionary
+        result = YoutubeSearch(text, max_results=10).to_dict()
+        if result:
+            break
+    url = "https://www.youtube.com" + result[0].get('url_suffix')
+    webbrowser.open(url)
+    time.sleep(1)
+    print("Youtube đã được mở cùng nội dung bạn tìm kiếm")
+
+Search_Youtube("em của ngày hôm qua")

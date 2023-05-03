@@ -1,0 +1,8 @@
+import webbrowser
+
+def search_google(text):
+    url = "http://www.google.com/search?q=" + text
+    webbrowser.open(url)
+    print("Bạn cần giúp gì khác nữa không")
+
+search_google("bách khoa")

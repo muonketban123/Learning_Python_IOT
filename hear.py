@@ -12,6 +12,6 @@ def hear():
             print(text)
             return str(text).lower()
         except:
-            return None
+            return "\0"
         
 print(hear())

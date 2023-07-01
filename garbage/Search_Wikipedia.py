@@ -1,6 +1,7 @@
 import wikipedia
 wikipedia.set_lang("vi")
 
+
 def wiki_search(text):
     try:
         #Do chuỗi thông tin gửi về khá dài nên chúng ta chia thành các đoạn và lưu ở dạng list

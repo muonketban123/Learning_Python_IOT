@@ -9,7 +9,7 @@ def Search_Youtube(text):
         result = YoutubeSearch(text, max_results=10).to_dict()
         if result:
             break
-    url = "https://www.youtube.com" + result[0].get('url_suffix')
+    url = "https://www.youtube.com" + result[0].get('url_suffix') # type: ignore
     webbrowser.open(url)
     time.sleep(1)
     print("Youtube đã được mở cùng nội dung bạn tìm kiếm")

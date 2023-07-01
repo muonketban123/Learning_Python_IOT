@@ -1,10 +1,12 @@
-from hear import*
-from speak import*
-from datetime import date, datetime, time
-import webbrowser
-import time
-import wikipedia
-wikipedia.set_lang("vi")
+from mypackage.library import*
+from mypackage.myfunction import*
+from mypackage.speak_hear import*
+from threading import Thread
+import requests as re
+
+url  = "https://myproject-8695e-default-rtdb.asia-southeast1.firebasedatabase.app/test.json"
+
+json = {"int" : 2}
 
 def wiki_search(text):
     try:
@@ -22,48 +24,27 @@ def wiki_search(text):
     except:
         speak("Mình không tìm được tài liệu bạn muốn tìm kiếm, Bạn muốn giúp gì khác không ?")
 
-     
-        
+def Tro_Ly_Ao():
+    f = open("database\\answer.txt", mode = "r", encoding= "utf8")
+    answer = f.read().split("\n")
+    speak("Xin chào mọi người, mình là trợ lý ảo BKFast")
+    i = 1
+    while True:
+        you = hear()
+        if you == None:
+            i += 1
+            #speak("Mình chưa nghe bạn nói gì cả.")
+        elif "đói" in you or "hỗ trợ" in you or "cần giúp" in you:
+            json["int"] = 2
+            s = re.put(url = url, json = json)
+            speak("Tôi đã gửi yêu cầu hỗ trợ cho bạn rồi")
+        elif "tìm kiếm" in you and "thông tin" in you:
+            wiki_search(you)
+        else:
+            index = handle_data(you)
+            speak(answer[index])
 
+thread1 = Thread(target= Tro_Ly_Ao)
+thread1.start()
 
-speak("Xin chào mọi người, mình là trợ lý ảo Bkfast")
-
-while True:
-    you = hear() 
-
-    if you == None:
-        speak("Mình chưa nghe bạn nói, bạn nói lại được không?")
-   
-    elif "tìm kiếm" in you and "thông tin" in you:
-        wiki_search(you)
-    elif "hôm nay" in you or "bây giờ" in you:
-        now = datetime.now()
-        if "giờ" in you:
-            t = now.strftime("%H h, %M phút, %S giây")
-            speak(t)
-        if "ngày" in you:
-            t = now.strftime("Hôm nay là ngày %d, tháng %m, năm %Y")
-            speak(t)
-    
-    elif "mở" in you:
-        if "facebook" in you:
-            webbrowser.open("https://www.facebook.com/")
-            time.sleep(1)
-            speak("Facebook đã được mở")
-
-        if "youtube" in you:
-            webbrowser.open("https://www.youtube.com/")
-            time.sleep(1)
-            speak("Youtube đã được mở")
-    #elif "mở" in you and "word" in you:
-        #os.startfile("C:\Program Files\Microsoft Office\root\Office16")
-
-    elif "con người" in you:
-        speak("Mình chỉ là trợ lý ảo thôi")
-    elif "hôm nay là ngày bao nhiêu" in you:
-        speak("Hôm nay là 29/4")
-    elif "chủ tịch" in you and "đầu tiên" in you:
-        speak("là chủ tịch HỒ CHÍ MINH")
-    elif "tạm biệt" in you:
-        speak("Tạm biệt, hẹn gặp lại")
-        break
+root.mainloop()
